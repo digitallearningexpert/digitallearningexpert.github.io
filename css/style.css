@@ -1,42 +1,132 @@
 html, body {
 	font-family: 'Roboto', sans-serif !important;
+	background: #f5f5f5;
 }
 
-nav .brand-logo {
-  font-size: 1.9rem;
+
+header, main, footer {
+	max-width: 600px;
+	margin: 0 auto;
+	padding: 1em;
+	transition: all 300ms ease-in-out;
 }
 
-#app a {
-	color: #ff6f00;
+footer {
+	margin-top: 3em;
+	color: #888;
+}
+footer a {
+	color: #666;
 }
 
-#app {
-	opacity: 1;
-	transition: opacity 0.3s;
+aside {
+	background: #e2e0e0;
+	position: fixed;
+	height: 100vh;
+	top: 0;
+	left: -330px;
+	bottom: 0;
+	z-index: 2;
+	width: 290px;
+	transition: all 300ms ease-in-out;
+	overflow-x: scroll;
+	box-shadow: inset -2em 0em 2em -2em rgba(0,0,0,0.5);
 }
-#app.loading{
-	opacity: .5;
+#aside-toggle {
+  display: none;
+}
+#aside-toggle:checked ~ aside {
+  left: 0;
+}
+#aside-toggle:checked ~ header, 
+#aside-toggle:checked ~ main, 
+#aside-toggle:checked ~ footer {
+	padding-left: calc(350px + 1em);
+}
+.aside-icon {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  padding: 20px 15px;
+  font-size: 32px;
+  transition: left 300ms ease-in-out, padding 0s, background-color 0s;
+}
+#aside-toggle:checked + .aside-icon {
+  left: 290px;
+}
+.aside-icon:after {
+	font-family: 'Material Icons';
+  content:"menu";
 }
 
-/* скрываем коменты */
-#app p sup a,
-#app>div { 
-	display: none;
+#aside-toggle:checked + .aside-icon:after {
+  content:"chevron_left";
 }
+
+
+@media screen and (max-width: 1100px) {
+	#aside-toggle:checked ~ aside {
+		box-shadow: 2em 0em 2em 0em rgba(0,0,0,0.25);
+	}
+	#aside-toggle:checked ~ header, 
+	#aside-toggle:checked ~ main, 
+	#aside-toggle:checked ~ footer {
+		padding-left: 1em;
+	}
+	#aside-toggle:checked + .aside-icon {
+	  right: 0;
+	  bottom: 0;
+	  background-color: rgba(0,0,0,0.5);
+	  transition: left 300ms ease-in-out, padding 0s, 300ms ease-in-out;
+	}
+}
+
+h1, h2, h3, h4, h5, h6,
+h1 span, h2 span, h3 span, h4 span, h5 span, h6 span  {
+	font-family: 'Roboto Slab', serif !important;
+	font-weight: 500 !important;
+}
+
+
+#title {
+	font-size: 3em;
+	line-height: 1.15;
+	padding-top: 20pt;
+	padding-bottom: 6pt;
+}
+
+.loading {
+	opacity: .25;
+	transition: all 300ms ease-in-out;
+}
+
+#edit {
+  position: fixed;
+  color: #000;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  padding: 20px 15px;
+  font-size: 32px;
+}
+
+
+
 
 /* GOOGLE DOC */
 #app {
 	overflow: hidden;
 	min-height: 100vh;
 }
-#app>div {
-  padding: 2em 0;
-}
+
 #app * {
 	max-width: 100% !important;
 	height: auto !important;
 }
-
+#app a {
+	color: #ff6f00;
+}
 .title {
 	padding-top: 0pt;
 	color: #000000;
@@ -61,27 +151,45 @@ nav .brand-logo {
 	text-align: left
 }
 
+#app {
+	opacity: 1;
+	transition: opacity 0.3s;
+}
+#app.loading{
+	opacity: .5;
+}
+
+/* скрываем коменты */
+#app p sup a,
+#app>div { 
+	display: none;
+}
 
 
-
-
+/* БОКОВОЕ МЕНЮ */
+aside ul {
+	list-style: none;
+	padding: 0;
+}
+aside ul li a{
+	display: block;
+	color: #000;
+	text-decoration: none;
+	padding: 1em;
+	font-size: 11pt;
+}
+aside li>a.current {
+  background-color: rgba(0,0,0,0.05);
+}
+aside .brand-logo{
+	padding: 1em;
+}
+aside .brand-logo a{
+	color: #000;
+	font-size: 36pt;
+	font-family: 'Roboto Slab', serif !important;
+	font-weight: 500 !important;
+}
 
 /*  */
 
-.no-margin {
-	margin: 0 !important;
-}
-
-.navbar nav, main, footer {
-  padding-left: 300px;
-}
-
-@media only screen and (max-width : 992px) {
-  .navbar nav, main, footer {
-    padding-left: 0;
-  }
-}
-
-.sidenav li>a.current {
-    background-color: rgba(0,0,0,0.05);
-}
