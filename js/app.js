@@ -70,15 +70,13 @@ window.onhashchange = function() {
 }
 
 function requestSheet(id) {
-	//var spreadsheetUrl = 'https://spreadsheets.google.com/feeds/cells/1zxRfhhW18YLG7V93Ll8st9RglmN2AwHC4hapjHaSwn4/1/public/values?alt=json';
 	var spreadsheetUrl = 'https://spreadsheets.google.com/feeds/cells/161zc8-R7FMxainr1tAq14Hz69KFzvYB0TkxYNsgkQg8/1/public/values?alt=json';
 	var sheet = new XMLHttpRequest();
 			sheet.open("GET", spreadsheetUrl, true);
 			sheet.send();
 	sheet.onreadystatechange = function() {
 		if (sheet.readyState == 4 ){
-			var results = [];
-			console.log(JSON.parse(sheet.responseText).feed.entry);
+		    var results = [];
 		    var entries = JSON.parse(sheet.responseText).feed.entry;
 		    var previousRow = 0;
 		    for (var i = 0; i < entries.length; i++) {
