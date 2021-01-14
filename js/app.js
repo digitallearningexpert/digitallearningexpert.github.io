@@ -12,13 +12,12 @@ MAIN
 + в боковом меню ориентироваться на нормальный линки и на ID
 + стремный баг когда файл не догружается -> сделать повторные попытки
 + показывать текущий пункт в меню
-= читабельность текста (у меня или в гуглдоке?)
++ вложенные папки в боковом меню
++ читабельность текста (у меня или в гуглдоке?)
 
 - дизайн райза - больше как приложение
 - оффлайн копия в локалсторадже?
 - гугл-аналитика
-- вложенные папки в боковом меню
-
 */
 
 
@@ -57,7 +56,7 @@ function requestDoc() {
 		}
 		makePage(title, content, edit);
 	}
-	
+
 	setActiveLink();
 }
 
@@ -71,29 +70,31 @@ window.onhashchange = function() {
 }
 
 function requestSheet(id) {
-	var spreadsheetUrl = 'https://spreadsheets.google.com/feeds/cells/1zxRfhhW18YLG7V93Ll8st9RglmN2AwHC4hapjHaSwn4/1/public/values?alt=json';
+	//var spreadsheetUrl = 'https://spreadsheets.google.com/feeds/cells/1zxRfhhW18YLG7V93Ll8st9RglmN2AwHC4hapjHaSwn4/1/public/values?alt=json';
+	var spreadsheetUrl = 'https://spreadsheets.google.com/feeds/cells/161zc8-R7FMxainr1tAq14Hz69KFzvYB0TkxYNsgkQg8/1/public/values?alt=json';
 	var sheet = new XMLHttpRequest();
 			sheet.open("GET", spreadsheetUrl, true);
 			sheet.send();
 	sheet.onreadystatechange = function() {
 		if (sheet.readyState == 4 ){
 			var results = [];
-	    var entries = JSON.parse(sheet.responseText).feed.entry;
-	    var previousRow = 0;
-	    for (var i = 0; i < entries.length; i++) {
-	        var latestRow = results[results.length - 1];
-	        var cell = entries[i];
-	        var text = cell.content.$t;
-	        var row = cell.gs$cell.row;
-	        if (row > previousRow) {
-	            var newRow = [];
-	            newRow.push(text);
-	            results.push(newRow);
-	            previousRow++;
-	        } else {
-	            latestRow.push(text);
-	        }
-	    }
+			console.log(JSON.parse(sheet.responseText).feed.entry);
+		    var entries = JSON.parse(sheet.responseText).feed.entry;
+		    var previousRow = 0;
+		    for (var i = 0; i < entries.length; i++) {
+		        var latestRow = results[results.length - 1];
+		        var cell = entries[i];
+		        var text = cell.content.$t;
+		        var row = cell.gs$cell.row;
+		        if (row > previousRow) {
+		            var newRow = [];
+		            newRow.push(text);
+		            results.push(newRow);
+		            previousRow++;
+		        } else {
+		            latestRow.push(text);
+		        }
+		    }
 	    makeSidebar(results)
 		}
 	}
@@ -109,9 +110,20 @@ function makePage(title, content, edit) {
 
 function makeSidebar(links) {
 	for (var i = 0; i < links.length; i++) {
-		li = document.createElement('li')
-		li.innerHTML = '<a href="#'+links[i][1].replace( /(https:\/\/drive.google.com\/open\?id=)(.*?)/igm , '$2' )+'" class="waves-effect">'+links[i][0]+'</a>'
-		document.querySelector('#sidenav').appendChild(li)
+		if (links[i][1] == 'folder') {
+			elem = document.createElement('li');
+			elem.innerHTML = '<input type="checkbox" id="list-item-'+i+'"><label for="list-item-'+i+'">'+links[i][0]+'</label><ul></ul>';
+			document.querySelector('#sidenav').appendChild(elem);
+		} else {
+			elem = document.createElement('li');
+			if (links[i][0].startsWith('>')) {
+				elem.innerHTML = '<a href="#'+links[i][1].replace(/(https:\/\/drive.google.com\/open\?id=)(.*?)/igm ,'$2')+'">'+links[i][0].replace(/>/igm ,'')+'</a>';
+				document.querySelector('#sidenav > li:last-child > ul').appendChild(elem);
+			} else {
+				elem.innerHTML = '<a href="#'+links[i][1].replace(/(https:\/\/drive.google.com\/open\?id=)(.*?)/igm ,'$2')+'">'+links[i][0]+'</a>';
+				document.querySelector('#sidenav').appendChild(elem);
+			}			
+		}
 	}
 	setActiveLink();
 }
@@ -140,5 +152,3 @@ function scrollToTop (duration) {
     }
     window.requestAnimationFrame(step);
 }
-
-
