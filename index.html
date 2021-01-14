@@ -27,65 +27,40 @@
 
   <!-- CSS  -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">   
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons&family=Roboto+Slab:wght@500&family=Roboto:wght@300;400;500;700&display=swap">
   <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 <body>
 
+  <input type="checkbox" id="aside-toggle" />
+  <label for="aside-toggle" class="aside-icon"></label>
+
   <header>
-    <div class="navbar navbar-fixed">
-      <nav class="amber z-depth-0" role="navigation">
-        <div class="nav-wrapper container">
-          <a href="#" data-target="sidenav" class="sidenav-trigger right"><i class="material-icons">view_headline</i></a>
-          <a id="edit" target = "_blank" href="#" class="right"><i class="material-icons">mode_edit</i></a>
-          <a id="title" class="brand-logo left"></a>
-        </div>
-      </nav>
-    </div>
+    <a id="edit" target = "_blank" href=""><i class="material-icons">mode_edit</i></i></a>
+    <h1 id="title">Загрузка...</h1>
   </header>
 
-  <sidenav>
-    <ul id="sidenav" class="sidenav sidenav-fixed z-depth-2">
-      <nav class="amber z-depth-0" role="navigation">
-        <div class="nav-wrapper container"><a href="#" class="brand-logo left">Digital Learning</a></div>
-      </nav>
+  <aside>
+    <div class="brand-logo"><a href="#">Digital Learning</a></div>
+    <ul id="sidenav">
     </ul>
-  </sidenav>
+  </aside>
 
   <main>
-
-    <div class="section">
-      <div class="container">
-          <div id="app"></div>
-      </div>
-    </div>
-
+    <div id="app"></div>
   </main>
 
-
-
   <footer class="page-footer amber lighten-1">
-      <div class="container">
-        <p>Сайт сообщества <a class="amber-text text-lighten-4" href="https://t.me/npsonline">Digital Learning</a>.</p>
-        <p>Все материалы распространяются по лицензии <a class="amber-text text-lighten-4" href="https://creativecommons.org/licenses/by/4.0/deed.ru">Creative Commons CC BY</a></p>
-        <br>
-      </div>
+    <div class="container">
+      <p>Сайт сообщества <a class="amber-text text-lighten-4" href="https://t.me/npsonline">Digital Learning</a>.</p>
+      <p>Все материалы распространяются по лицензии <a class="amber-text text-lighten-4" href="https://creativecommons.org/licenses/by/4.0/deed.ru">Creative Commons CC BY</a></p>
+      <br>
+    </div>
   </footer>
 
 
   <!--  Scripts-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="js/app.js"></script>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CW0R2RW5F9"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-CW0R2RW5F9');
-  </script>
 
   </body>
 </html>
