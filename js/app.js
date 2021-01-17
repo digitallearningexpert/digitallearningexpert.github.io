@@ -1,26 +1,4 @@
 
-/*
-MAIN
-
-+ заменить линковку с доками на другую
-+ поля вокруг контента убить
-+ кнопка редактирования
-+ обработка ошибок адреса
-+ вывести название файла в заголовок
-+ боковое меню из файла
-+ иконки в боковом меню (эмодзи)
-+ в боковом меню ориентироваться на нормальный линки и на ID
-+ стремный баг когда файл не догружается -> сделать повторные попытки
-+ показывать текущий пункт в меню
-+ вложенные папки в боковом меню
-+ читабельность текста (у меня или в гуглдоке?)
-
-- дизайн райза - больше как приложение
-- оффлайн копия в локалсторадже?
-- гугл-аналитика
-*/
-
-
 requestDoc();
 requestSheet();
 
@@ -33,11 +11,12 @@ function requestDoc() {
 	url = "https://docs.google.com/feeds/download/documents/export/Export?id="+id+"&exportFormat=html"
 	var doc = new XMLHttpRequest(); doc.timeout = 10000; doc.open("GET", url, true); doc.send();
 	doc.onreadystatechange = function() {
-		if (doc.status == 200) {
+		if (doc.readyState == 4 & doc.status == 200) {
+			style = makeStyleLink(doc.responseText.replace(/.*?@import url\('(.*?)'\);.*/g,'$1'));
 		    edit = 'https://docs.google.com/document/d/'+id+'/edit';  
 		    title = decodeURI(doc.getResponseHeader('Content-Disposition').match(/UTF-8\'\'(.+)\.html/)[1]);
-		    content = doc.responseText.replace(/(p|ul){.*?}/g,'').replace( /(['"])(https:\/\/www\.google\.com\/url\?q=https:\/\/docs.google.com\/document(\/u\/0)*\/d\/)(.*?)(\/edit.*?)(['"])/igm , '#$4' );
-		} 
+		    content = doc.responseText.replace(/(p|ul){.*?}/g,'').replace(/qwe@import.*?\);/g,'').replace( /(['"])(https:\/\/www\.google\.com\/url\?q=https:\/\/docs.google.com\/document(\/u\/0)*\/d\/)(.*?)(\/edit.*?)(['"])/igm , '#$4' );
+		}
 		else if (doc.status == 404) {
 			edit = '#';
 			title = 'Ошибка в ссылке';
@@ -70,13 +49,14 @@ window.onhashchange = function() {
 }
 
 function requestSheet(id) {
+	//var spreadsheetUrl = 'https://spreadsheets.google.com/feeds/cells/1zxRfhhW18YLG7V93Ll8st9RglmN2AwHC4hapjHaSwn4/1/public/values?alt=json';
 	var spreadsheetUrl = 'https://spreadsheets.google.com/feeds/cells/161zc8-R7FMxainr1tAq14Hz69KFzvYB0TkxYNsgkQg8/1/public/values?alt=json';
 	var sheet = new XMLHttpRequest();
 			sheet.open("GET", spreadsheetUrl, true);
 			sheet.send();
 	sheet.onreadystatechange = function() {
 		if (sheet.readyState == 4 ){
-		    var results = [];
+			var results = [];
 		    var entries = JSON.parse(sheet.responseText).feed.entry;
 		    var previousRow = 0;
 		    for (var i = 0; i < entries.length; i++) {
@@ -126,6 +106,15 @@ function makeSidebar(links) {
 	setActiveLink();
 }
 
+function makeStyleLink(url) {
+    var head = document.getElementsByTagName('head')[0];
+    var link = document.createElement('link');
+    link.setAttribute('href', url);
+    link.setAttribute('type', 'text/css');
+    link.setAttribute('rel', 'stylesheet');
+    head.appendChild(link);
+}
+
 function setActiveLink() {
 	if (document.querySelectorAll("a.current")[0]) {
 		document.querySelectorAll("a.current")[0].classList.remove('current');
@@ -135,7 +124,7 @@ function setActiveLink() {
 	}
 }
 
-function scrollToTop (duration) {
+function scrollToTop(duration) {
     if (document.scrollingElement.scrollTop === 0) return;
     const cosParameter = document.scrollingElement.scrollTop / 2;
     let scrollCount = 0, oldTimestamp = null;
