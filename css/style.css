@@ -47,10 +47,10 @@ aside {
 }
 .aside-icon {
   position: fixed;
-  cursor: pointer;
   z-index: 1;
   top: 0;
   left: 0;
+  bottom: 0;
   padding: 20px 15px;
   font-size: 32px;
   transition: left 300ms ease-in-out, padding 0s, background-color 0s;
@@ -61,6 +61,7 @@ aside {
 .aside-icon:after {
   font-family: 'Material Icons';
   content:"menu";
+  cursor: pointer;
 }
 
 #aside-toggle:checked + .aside-icon:after {
