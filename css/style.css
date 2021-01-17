@@ -49,6 +49,14 @@ a{
 
 }
 
+.text-stroke {
+	text-shadow:
+		-1px -1px 0 #f5f5f5,  
+		 1px -1px 0 #f5f5f5,
+		-1px 1px 0 #f5f5f5,
+		 1px 1px 0 #f5f5f5;
+}
+
 #aside-toggle {
   display: none;
 }
