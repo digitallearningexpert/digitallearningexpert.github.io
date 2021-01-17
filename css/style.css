@@ -60,6 +60,7 @@ aside {
 .aside-icon:after {
 	font-family: 'Material Icons';
   content:"menu";
+  cursor: pointer;
 }
 
 #aside-toggle:checked + .aside-icon:after {
@@ -179,7 +180,6 @@ aside ul li label {
 	padding: 1em;
 	font-size: 11pt;
 	user-select: none;
-	cursor: pointer;
 }
 aside li>a.current {
   background-color: rgba(0,0,0,0.05);
