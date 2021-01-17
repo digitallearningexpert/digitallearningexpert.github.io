@@ -1,9 +1,8 @@
 html, body {
 	font-family: 'Roboto', sans-serif !important;
+	color: #000;
 	background: #f5f5f5;
-	font-weight:400;
 }
-
 
 header, main, footer {
 	max-width: 600px;
@@ -180,6 +179,7 @@ aside ul li label {
 	padding: 1em;
 	font-size: 11pt;
 	user-select: none;
+	cursor: pointer;
 }
 aside li>a.current {
   background-color: rgba(0,0,0,0.05);
