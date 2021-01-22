@@ -1,4 +1,3 @@
-
 requestDoc();
 requestSheet();
 
@@ -15,7 +14,7 @@ function requestDoc() {
 			style = makeStyleLink(doc.responseText.replace(/.*?@import url\('(.*?)'\);.*/g,'$1'));
 		    edit = 'https://docs.google.com/document/d/'+id+'/edit';  
 		    title = decodeURI(doc.getResponseHeader('Content-Disposition').match(/UTF-8\'\'(.+)\.html/)[1]);
-		    content = doc.responseText.replace(/(p|ul){.*?}/g,'').replace(/qwe@import.*?\);/g,'').replace( /(['"])(https:\/\/www\.google\.com\/url\?q=https:\/\/docs.google.com\/document(\/u\/0)*\/d\/)(.*?)(\/edit.*?)(['"])/igm , '#$4' );
+		    content = preparePage(doc.responseText);
 		}
 		else if (doc.status == 404) {
 			edit = '#';
@@ -33,6 +32,7 @@ function requestDoc() {
 	  		title = 'Проблемы с подключением к Гугл Диску';
 		  	content = '<p style="padding-top:10px;">Проверьте доступ и обновите страницу</p>';
 		}
+		console.log(content);
 		makePage(title, content, edit);
 	}
 
@@ -46,6 +46,14 @@ window.onhashchange = function() {
 	document.querySelector('#app').classList.add('loading');
 	scrollToTop(500);
   	requestDoc();
+}
+
+function preparePage(html) {
+	return html
+		.replace(/(p|ul){.*?}/g,'')
+		.replace(/@import.*?\);/g,'')
+		.replace( /(['"])(https:\/\/www\.google\.com\/url\?q=https:\/\/docs.google.com\/document(\/u\/0)*\/d\/)(.*?)(\/edit.*?)(['"])/igm , '#$4' )
+		.replace(/<span[^>]*>https\:\/\/youtu\.be\/(.*?)<\/span>/igm,'<p class="responsive-iframe"><iframe width="100%" height="500px !important" src="https://www.youtube.com/embed/$1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>')
 }
 
 function requestSheet(id) {
