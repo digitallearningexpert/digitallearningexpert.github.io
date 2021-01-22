@@ -101,7 +101,7 @@ a{
 	  transition: left 300ms ease-in-out, padding 0s, 300ms ease-in-out;
 	}
 	#aside-toggle:checked + .aside-icon,
-	#aside-toggle:checked ~ header > #edit {
+	#aside-toggle:checked ~ header #edit {
   text-shadow: none;
 }
 }
@@ -131,7 +131,6 @@ h1 span, h2 span, h3 span, h4 span, h5 span, h6 span  {
 	overflow: hidden;
 	min-height: 100vh;
 }
-
 #app * {
 	max-width: 100% !important;
 	height: auto !important;
@@ -185,6 +184,23 @@ h1 span, h2 span, h3 span, h4 span, h5 span, h6 span  {
 #app p sup a,
 #app>div { 
 	display: none;
+}
+
+/* youtobe */
+#app *.responsive-iframe {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding-top: 56.25%; 
+}
+#app *.responsive-iframe iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100% !important;
 }
 
 
