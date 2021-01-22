@@ -32,7 +32,6 @@ function requestDoc() {
 	  		title = 'Проблемы с подключением к Гугл Диску';
 		  	content = '<p style="padding-top:10px;">Проверьте доступ и обновите страницу</p>';
 		}
-		console.log(content);
 		makePage(title, content, edit);
 	}
 
@@ -57,7 +56,6 @@ function preparePage(html) {
 }
 
 function requestSheet(id) {
-	//var spreadsheetUrl = 'https://spreadsheets.google.com/feeds/cells/1zxRfhhW18YLG7V93Ll8st9RglmN2AwHC4hapjHaSwn4/1/public/values?alt=json';
 	var spreadsheetUrl = 'https://spreadsheets.google.com/feeds/cells/161zc8-R7FMxainr1tAq14Hz69KFzvYB0TkxYNsgkQg8/1/public/values?alt=json';
 	var sheet = new XMLHttpRequest();
 			sheet.open("GET", spreadsheetUrl, true);
