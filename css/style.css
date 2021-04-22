@@ -230,11 +230,15 @@ aside li>ul>li>a {
   margin: 1em 1em 1em 2em;
   border-radius: 0px;
 }
+aside li>ul>li>a:hover {
+  box-shadow: 4px 0px #435ebe17 inset;
+}
 aside li>ul>li>a.current {
   color: #435ebe;
   font-weight: bold;
   box-shadow: 4px 0px #435ebe inset;
 }
+
 aside .brand-logo{
   padding: 1em;
 }
